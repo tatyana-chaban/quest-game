@@ -5,8 +5,6 @@
 *.jar
 *.war
 
-.idea
-
 target/
 !**/src/main/**/target/
 !**/src/test/**/target/
