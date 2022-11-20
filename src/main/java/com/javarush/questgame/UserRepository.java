@@ -1,20 +1,21 @@
 package com.javarush.questgame;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserRepository {
-    private List<User> repository;
+    private final Map<String, User> repository;
 
     public UserRepository(){
-        repository = new ArrayList<>();
+        repository = new HashMap<>();
     }
-
-    public boolean contains(User user){
-        return repository.contains(user);
+    public boolean contains(String userName){
+        return repository.containsKey(userName);
     }
-
     public void add(User user){
-        repository.add(user);
+        repository.put(user.getName(), user);
+    }
+    public User getUserByName(String userName){
+        return repository.get(userName);
     }
 }
