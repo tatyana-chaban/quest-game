@@ -44,11 +44,11 @@ public class ApplicationContext implements ServletContextListener {
         context.setAttribute("itemRepository", itemRepository);
 
 
-        Repository<Integer, Task> taskRepository = new Repository<>();
-        for (Task task: creator.createTasks()) {
-            taskRepository.add(task.getId(), task);
+        Repository<Integer, Quest> questRepository = new Repository<>();
+        for (Quest quest : creator.createQuests()) {
+            questRepository.add(quest.getId(), quest);
         }
-        context.setAttribute("taskRepository", taskRepository);
+        context.setAttribute("taskRepository", questRepository);
 
 
     }

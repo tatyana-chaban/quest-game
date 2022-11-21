@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>Location</title>
     <meta charset="UTF-8">
 </head>
 <body>

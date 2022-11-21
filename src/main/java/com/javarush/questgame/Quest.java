@@ -4,7 +4,7 @@ import lombok.*;
 
 @Data
 @Builder
-public class Task {
+public class Quest {
     private Integer id;
     private String text;
 

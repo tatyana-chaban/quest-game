@@ -7,18 +7,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "StartServlet", value = "/start")
-public class StartServlet extends HttpServlet {
-    UserRepository repository;
+@WebServlet(name = "entranceServlet", value = "/entrance")
+public class EntranceServlet extends HttpServlet {
+
+   private Repository<String, User> userRepository = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ServletContext servletContext = config.getServletContext();
-        repository = (UserRepository) servletContext.getContext("userRepository");
-
+        ServletContext context = config.getServletContext();
+        userRepository = (Repository<String, User>)context.getAttribute("userRepository");
     }
 
     @Override
@@ -26,26 +27,28 @@ public class StartServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String userName = request.getParameter("username");
 
+        HttpSession session = request.getSession();
+
+
         if (userName.isBlank()) {
             request.setAttribute("blankName", true);
             getServletContext()
-                    .getRequestDispatcher("/index.jsp")
+                    .getRequestDispatcher("/WEB-INF/jsp/index.jsp")
                     .forward(request, response);
         } else {
-            request.setAttribute("username", userName);
-
             User user;
-            if(repository.contains(userName)){
-                user = repository.getUserByName(userName);
+            if(userRepository.contains(userName)){
+                user = userRepository.getByKey(userName);
             } else {
                 user = new User(userName);
-                repository.add(user);
+                userRepository.add(user.getName(), user);
             }
 
+            request.setAttribute("username", userName);
             request.setAttribute("user", user);
 
             getServletContext()
-                    .getRequestDispatcher("/game.jsp")
+                    .getRequestDispatcher("/WEB-INF/jsp/location.jsp")
                     .forward(request, response);
         }
     }

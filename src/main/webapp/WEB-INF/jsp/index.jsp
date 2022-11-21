@@ -10,7 +10,7 @@
 <body>
 <h1>Привет</h1>
 <hr>
-<form accept-charset="UTF-8" action="start" method="POST">
+<form accept-charset="UTF-8" action="entrance" method="post">
     <label for="name">Введите имя
         <input type="text" id="name" name="username">
         <input type="submit" value="ОК" />

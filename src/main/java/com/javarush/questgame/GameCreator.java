@@ -10,7 +10,7 @@ public class GameCreator {
     private final List<Item> items = new ArrayList<>();
     private final List<Question> dialog = new ArrayList<>();
 
-    private final List<Task> tasks = new ArrayList<>();
+    private final List<Quest> quests = new ArrayList<>();
 
     public List<Location> createMap() {
         Location hall = Location.builder()
@@ -215,44 +215,44 @@ public class GameCreator {
         return items;
     }
 
-    public List<Task> createTasks(){
-        Task task1 = Task.builder()
+    public List<Quest> createQuests(){
+        Quest quest1 = Quest.builder()
                 .id(1)
                 .text("Talk to Mrs Stone")
                 .build();
-        tasks.add(task1);
+        quests.add(quest1);
 
-        Task task2 = Task.builder()
+        Quest quest2 = Quest.builder()
                 .id(2)
                 .text("Find the virus")
                 .build();
-        tasks.add(task2);
+        quests.add(quest2);
 
-        Task task3 = Task.builder()
+        Quest quest3 = Quest.builder()
                 .id(3)
                 .text("Find reagent")
                 .build();
-        tasks.add(task3);
+        quests.add(quest3);
 
-        Task task4 = Task.builder()
+        Quest quest4 = Quest.builder()
                 .id(4)
                 .text("Find formula")
                 .build();
-        tasks.add(task4);
+        quests.add(quest4);
 
-        Task task5 = Task.builder()
+        Quest quest5 = Quest.builder()
                 .id(5)
                 .text("Collect all the stars")
                 .build();
-        tasks.add(task5);
+        quests.add(quest5);
 
-        Task task6 = Task.builder()
+        Quest quest6 = Quest.builder()
                 .id(6)
                 .text("Find the key")
                 .build();
-        tasks.add(task6);
+        quests.add(quest6);
 
-        return tasks;
+        return quests;
     }
 
 
