@@ -8,6 +8,9 @@ public class GameCreator {
     private final List<Location> gameMap = new ArrayList<>();
     private final List<Nps> nps = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
+    private final List<Question> dialog = new ArrayList<>();
+
+    private final List<Task> tasks = new ArrayList<>();
 
     public List<Location> createMap() {
         Location hall = Location.builder()
@@ -59,9 +62,103 @@ public class GameCreator {
     public List<Nps> createNps(){
         Nps mrsStone = Nps.builder()
                 .name("Mrs. Stone")
+                .startMessageId(1)
                 .build();
         nps.add(mrsStone);
         return nps;
+    }
+
+    public List<Question> createDialogWithMrsStone(){
+        Question q1 = Question.builder()
+                .id(1)
+                .text("Good afternoon! Mr H. is away from home.With whom do I have the honor of speaking?")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Good afternoon! I am a Dr. Strange - colleague from work.")
+                                .nextQuestionId(2)
+                                .build(),
+                        Question.Answer.builder()
+                                .text("Good afternoon! I am a Dr. Watson - old friend of Mr. H.")
+                                .nextQuestionId(3)
+                                .build()
+                ))
+                .build();
+        dialog.add(q1);
+
+        Question q2 = Question.builder()
+                .id(2)
+                .text("Mr H. never talks about his colleagues. I even thought they didn't exist. Nice to meet you, how can I help?")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Mr H. is at a conference now and sent me to pick up some stuff from his lab.")
+                                .nextQuestionId(4)
+                                .build(),
+                        Question.Answer.builder()
+                                .text("I need to close the portal to the multiverse!")
+                                .finishMessage("Looks like someone watched too much sci-fi.. Poor Mrs Stone got scared and kicked you out the door")
+                                .build()
+                ))
+                .build();
+        dialog.add(q2);
+
+        Question q3 = Question.builder()
+                .id(3)
+                .text("Queerly... I know all the friends of Mr H. I will call him now.")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Oh don't worry, I'll come later when Mr H. is at home.")
+                                .finishMessage("You failed the mission, we'll have to find a new agent.")
+                                .build(),
+                        Question.Answer.builder()
+                                .text("Ok, i'll wait")
+                                .finishMessage("OOh.. you better just leave.. Mr H. gave advice to call the police!")
+                                .build()
+                ))
+                .build();
+        dialog.add(q3);
+
+        Question q4 = Question.builder()
+                .id(4)
+                .text("The door to the laboratory is always locked. Did Mr H. give you the key?")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Of course I have the key!")
+                                .nextQuestionId(5)
+                                .build(),
+                        Question.Answer.builder()
+                                .text("Unfortunately no.")
+                                .nextQuestionId(6)
+                                .build()
+                ))
+                .build();
+        dialog.add(q4);
+
+        Question q5 = Question.builder()
+                .id(5)
+                .text("Very good. House at your disposal!")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Thanks a lot!")
+                                .build()
+                ))
+                .build();
+        dialog.add(q5);
+
+        Question q6 = Question.builder()
+                .id(6)
+                .text("Then you better go back and ask for the key. Good luck!")
+                .answers(List.of(
+                        Question.Answer.builder()
+                                .text("Good bye!")
+                                .finishMessage("Could be worse, let's try again!")
+                                .build()
+                ))
+                .build();
+        dialog.add(q6);
+
+
+
+        return dialog;
     }
 
     public List<Item> createItems(){
@@ -116,6 +213,46 @@ public class GameCreator {
         items.add(key);
 
         return items;
+    }
+
+    public List<Task> createTasks(){
+        Task task1 = Task.builder()
+                .id(1)
+                .text("Talk to Mrs Stone")
+                .build();
+        tasks.add(task1);
+
+        Task task2 = Task.builder()
+                .id(2)
+                .text("Find the virus")
+                .build();
+        tasks.add(task2);
+
+        Task task3 = Task.builder()
+                .id(3)
+                .text("Find reagent")
+                .build();
+        tasks.add(task3);
+
+        Task task4 = Task.builder()
+                .id(4)
+                .text("Find formula")
+                .build();
+        tasks.add(task4);
+
+        Task task5 = Task.builder()
+                .id(5)
+                .text("Collect all the stars")
+                .build();
+        tasks.add(task5);
+
+        Task task6 = Task.builder()
+                .id(6)
+                .text("Find the key")
+                .build();
+        tasks.add(task6);
+
+        return tasks;
     }
 
 

@@ -8,11 +8,11 @@ import lombok.*;
 public class User {
     private final String name;
     private int numberOfParties;
+    private String currentLocationName;
 
-    private Location currentLocation;
-
-    public User(String name){
+    public User(String name) {
         this.name = name;
         numberOfParties = 0;
+        currentLocationName = "hall";
     }
 }

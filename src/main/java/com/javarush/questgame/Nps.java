@@ -6,4 +6,5 @@ import lombok.*;
 @Builder
 public class Nps {
     private String name;
+    private Integer startMessageId;
 }
