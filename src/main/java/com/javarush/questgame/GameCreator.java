@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GameCreator {
     private final List<Location> gameMap = new ArrayList<>();
-    private final List<Nps> nps = new ArrayList<>();
+    private final List<Npc> nps = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
     private final List<Question> dialog = new ArrayList<>();
 
@@ -59,8 +59,8 @@ public class GameCreator {
         return gameMap;
     }
 
-    public List<Nps> createNps(){
-        Nps mrsStone = Nps.builder()
+    public List<Npc> createNps(){
+        Npc mrsStone = Npc.builder()
                 .name("Mrs. Stone")
                 .startMessageId(1)
                 .build();

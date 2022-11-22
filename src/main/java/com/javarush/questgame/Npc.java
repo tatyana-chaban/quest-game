@@ -4,7 +4,7 @@ import lombok.*;
 
 @Data
 @Builder
-public class Nps {
+public class Npc {
     private String name;
     private Integer startMessageId;
 }

@@ -1,6 +1,5 @@
 package com.javarush.questgame;
 
-
 import lombok.*;
 
 @Getter

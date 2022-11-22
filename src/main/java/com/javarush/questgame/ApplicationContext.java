@@ -23,9 +23,9 @@ public class ApplicationContext implements ServletContextListener {
         context.setAttribute("locationRepository", locationRepository);
 
 
-        Repository<String, Nps> npsRepository = new Repository<>();
-        for (Nps nps: creator.createNps()) {
-            npsRepository.add(nps.getName(), nps);
+        Repository<String, Npc> npsRepository = new Repository<>();
+        for (Npc npc : creator.createNps()) {
+            npsRepository.add(npc.getName(), npc);
         }
         context.setAttribute("npsRepository", npsRepository);
 

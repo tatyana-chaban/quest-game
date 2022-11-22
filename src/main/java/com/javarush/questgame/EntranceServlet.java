@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "entranceServlet", value = "/entrance")
 public class EntranceServlet extends HttpServlet {
 
-   private Repository<String, User> userRepository = null;
+   private Repository<String, User> userRepository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -29,7 +29,6 @@ public class EntranceServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-
         if (userName.isBlank()) {
             request.setAttribute("blankName", true);
             getServletContext()
@@ -44,12 +43,10 @@ public class EntranceServlet extends HttpServlet {
                 userRepository.add(user.getName(), user);
             }
 
-            request.setAttribute("username", userName);
-            request.setAttribute("user", user);
+            session.setAttribute("username", userName); // delete later
+            session.setAttribute("user", user);
 
-            getServletContext()
-                    .getRequestDispatcher("/WEB-INF/jsp/location.jsp")
-                    .forward(request, response);
+            response.sendRedirect("location");
         }
     }
 }
