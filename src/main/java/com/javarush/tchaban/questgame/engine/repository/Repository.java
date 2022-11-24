@@ -1,7 +1,6 @@
-package com.javarush.questgame;
+package com.javarush.tchaban.questgame.engine.repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Repository <K, T>{
     private final Map<K, T> repository = new HashMap<>();
@@ -18,7 +17,7 @@ public class Repository <K, T>{
         return repository.containsKey(key);
     }
 
-    public boolean isEmpty(){
-        return repository.isEmpty();
+    public Set<K> getAllKeys(){
+        return repository.keySet();
     }
 }

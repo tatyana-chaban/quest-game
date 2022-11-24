@@ -1,4 +1,8 @@
-package com.javarush.questgame;
+package com.javarush.tchaban.questgame.servlets;
+
+import com.javarush.tchaban.questgame.engine.GameCreator;
+import com.javarush.tchaban.questgame.engine.entities.*;
+import com.javarush.tchaban.questgame.engine.repository.Repository;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -15,6 +19,9 @@ public class ApplicationContext implements ServletContextListener {
         Repository<String, User> userRepository = new Repository<>();
         context.setAttribute("userRepository", userRepository);
 
+        Housekeeper mrsStone = creator.createHousekeeper();
+        context.setAttribute("housekeeper", mrsStone);
+
 
         Repository<String, Location> locationRepository = new Repository<>();
         for (Location location : creator.createMap()) {
@@ -23,22 +30,15 @@ public class ApplicationContext implements ServletContextListener {
         context.setAttribute("locationRepository", locationRepository);
 
 
-        Repository<String, Npc> npsRepository = new Repository<>();
-        for (Npc npc : creator.createNps()) {
-            npsRepository.add(npc.getName(), npc);
-        }
-        context.setAttribute("npsRepository", npsRepository);
-
-
         Repository<Integer, Question> questionRepository = new Repository<>();
-        for (Question question: creator.createDialogWithMrsStone()) {
+        for (Question question : creator.createDialogWithMrsStone()) {
             questionRepository.add(question.getId(), question);
         }
         context.setAttribute("questionRepository", questionRepository);
 
 
         Repository<String, Item> itemRepository = new Repository<>();
-        for (Item item:creator.createItems()) {
+        for (Item item : creator.createItems()) {
             itemRepository.add(item.getName(), item);
         }
         context.setAttribute("itemRepository", itemRepository);
@@ -48,7 +48,7 @@ public class ApplicationContext implements ServletContextListener {
         for (Quest quest : creator.createQuests()) {
             questRepository.add(quest.getId(), quest);
         }
-        context.setAttribute("taskRepository", questRepository);
+        context.setAttribute("questRepository", questRepository);
 
 
     }

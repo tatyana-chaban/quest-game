@@ -1,4 +1,4 @@
-package com.javarush.questgame;
+package com.javarush.tchaban.questgame.engine.entities;
 
 import lombok.*;
 

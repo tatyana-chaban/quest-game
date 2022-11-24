@@ -1,4 +1,4 @@
-package com.javarush.questgame;
+package com.javarush.tchaban.questgame.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +14,6 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/index.jsp")
-                .forward(request,response);
+                .forward(request, response);
     }
 }

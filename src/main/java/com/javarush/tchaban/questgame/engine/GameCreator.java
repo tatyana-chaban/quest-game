@@ -1,4 +1,7 @@
-package com.javarush.questgame;
+package com.javarush.tchaban.questgame.engine;
+
+import com.javarush.tchaban.questgame.engine.entities.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,69 +9,63 @@ import java.util.List;
 
 public class GameCreator {
     private final List<Location> gameMap = new ArrayList<>();
-    private final List<Npc> nps = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
     private final List<Question> dialog = new ArrayList<>();
-
     private final List<Quest> quests = new ArrayList<>();
 
     public List<Location> createMap() {
         Location hall = Location.builder()
                 .name("hall")
                 .availableLocations(List.of("kitchen", "stairs", "bathroom"))
-                .nps(List.of("Mrs. Stone"))
-                .items(List.of("star1"))
                 .build();
         gameMap.add(hall);
 
         Location kitchen = Location.builder()
                 .name("kitchen")
                 .availableLocations(List.of("hall"))
-                .items(List.of("bottle1", "secretFormula", "star2"))
+                .items(List.of("bottle with reagent", "secret formula"))
                 .build();
         gameMap.add(kitchen);
 
         Location bathroom = Location.builder()
                 .name("bathroom")
                 .availableLocations(List.of("hall"))
-                .items(List.of("star3"))
+                .items(List.of("star"))
                 .build();
         gameMap.add(bathroom);
 
         Location stairs = Location.builder()
                 .name("stairs")
                 .availableLocations(List.of("hall", "laboratory", "bedroom"))
-                .items(List.of("star4"))
                 .build();
         gameMap.add(stairs);
 
         Location laboratory = Location.builder()
                 .name("laboratory")
+                .isLocked(true)
                 .availableLocations(List.of("stairs"))
-                .items(List.of("bottle2", "star5"))
+                .items(List.of("test tube with virus"))
                 .build();
         gameMap.add(laboratory);
 
         Location bedroom = Location.builder()
                 .name("bedroom")
                 .availableLocations(List.of("stairs"))
-                .items(List.of("key", "star6"))
+                .items(List.of("key"))
                 .build();
         gameMap.add(bedroom);
 
         return gameMap;
     }
 
-    public List<Npc> createNps(){
-        Npc mrsStone = Npc.builder()
+    public Housekeeper createHousekeeper() {
+        return Housekeeper.builder()
                 .name("Mrs. Stone")
-                .startMessageId(1)
+                .startQuestionId(1)
                 .build();
-        nps.add(mrsStone);
-        return nps;
     }
 
-    public List<Question> createDialogWithMrsStone(){
+    public List<Question> createDialogWithMrsStone() {
         Question q1 = Question.builder()
                 .id(1)
                 .text("Good afternoon! Mr H. is away from home.With whom do I have the honor of speaking?")
@@ -111,7 +108,7 @@ public class GameCreator {
                                 .build(),
                         Question.Answer.builder()
                                 .text("Ok, i'll wait")
-                                .finishMessage("OOh.. you better just leave.. Mr H. gave advice to call the police!")
+                                .finishMessage("Oh.. you better just leave.. Mr H. gave advice to call the police!")
                                 .build()
                 ))
                 .build();
@@ -157,100 +154,63 @@ public class GameCreator {
         dialog.add(q6);
 
 
-
         return dialog;
     }
 
-    public List<Item> createItems(){
-        Item bottle1 = Item.builder()
-                .name("bottle1")
-                .build();
-        items.add(bottle1);
+    public List<Item> createItems() {
+        items.add(Item.builder()
+                .name("bottle with reagent")
+                .build());
 
-        Item bottle2 = Item.builder()
-                .name("bottle2")
-                .build();
-        items.add(bottle2);
+        items.add(Item.builder()
+                .name("test tube with virus")
+                .build());
 
-        Item secretFormula = Item.builder()
-                .name("secretFormula")
-                .build();
-        items.add(secretFormula);
+        items.add(Item.builder()
+                .name("secret formula")
+                .build());
 
-        Item star1 = Item.builder()
-                .name("star1")
-                .build();
-        items.add(star1);
+        items.add(Item.builder()
+                .name("star")
+                .build());
 
-        Item star2 = Item.builder()
-                .name("star2")
-                .build();
-        items.add(star2);
-
-        Item star3 = Item.builder()
-                .name("star3")
-                .build();
-        items.add(star3);
-
-        Item star4 = Item.builder()
-                .name("star4")
-                .build();
-        items.add(star4);
-
-        Item star5 = Item.builder()
-                .name("star5")
-                .build();
-        items.add(star5);
-
-        Item star6 = Item.builder()
-                .name("star6")
-                .build();
-        items.add(star6);
-
-        Item key = Item.builder()
+        items.add(Item.builder()
                 .name("key")
-                .build();
-        items.add(key);
+                .build());
 
         return items;
     }
 
-    public List<Quest> createQuests(){
-        Quest quest1 = Quest.builder()
+    public List<Quest> createQuests() {
+        quests.add(Quest.builder()
                 .id(1)
-                .text("Talk to Mrs Stone")
-                .build();
-        quests.add(quest1);
-
-        Quest quest2 = Quest.builder()
-                .id(2)
-                .text("Find the virus")
-                .build();
-        quests.add(quest2);
-
-        Quest quest3 = Quest.builder()
-                .id(3)
-                .text("Find reagent")
-                .build();
-        quests.add(quest3);
-
-        Quest quest4 = Quest.builder()
-                .id(4)
-                .text("Find formula")
-                .build();
-        quests.add(quest4);
-
-        Quest quest5 = Quest.builder()
-                .id(5)
-                .text("Collect all the stars")
-                .build();
-        quests.add(quest5);
-
-        Quest quest6 = Quest.builder()
-                .id(6)
                 .text("Find the key")
-                .build();
-        quests.add(quest6);
+                .isFinished(new ContentCheckPredicate("key"))
+                .build());
+
+        quests.add(Quest.builder()
+                .id(2)
+                .text("Find reagent")
+                .isFinished(new ContentCheckPredicate("bottle with reagent"))
+                .build());
+
+        quests.add(Quest.builder()
+                .id(3)
+                .text("Find formula")
+                .isFinished(new ContentCheckPredicate("secret formula"))
+                .build());
+
+        quests.add(Quest.builder()
+                .id(4)
+                .text("Find bonus star")
+                .isFinished(new ContentCheckPredicate("star"))
+                .build());
+
+        quests.add(Quest.builder()
+                .id(5)
+                .text("Find the virus")
+                .isFinished(new ContentCheckPredicate("test tube with virus"))
+                .build());
 
         return quests;
     }
