@@ -12,6 +12,7 @@ public class User {
     private final String name;
     private AtomicInteger numberOfParties;
     private String currentLocationName;
+    private String winMessage;
     private List<String> inventory = new ArrayList<>();
     private List<Integer> quests = new ArrayList<>();
 
@@ -19,6 +20,7 @@ public class User {
         this.name = name;
         numberOfParties = new AtomicInteger(0);
         currentLocationName = "hall";
+        winMessage = "Congratulations, mission accomplished. The world is saved from a new pandemic!";
     }
     public void putInInventory(String item){
         inventory.add(item);
@@ -32,5 +34,11 @@ public class User {
     }
     public int getNumberOfParties(){
         return numberOfParties.get();
+    }
+
+    public void returnToStart(){
+        inventory.clear();
+        quests.clear();
+        currentLocationName = "hall";
     }
 }

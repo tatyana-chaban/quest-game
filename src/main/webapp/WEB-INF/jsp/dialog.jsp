@@ -18,7 +18,7 @@
                 </c:when>
 
                 <c:when test="${answer.getNextQuestionId() == null && answer.getFinishMessage() != null}">
-                    <form action="${pageContext.request.contextPath}/finish" method="post">
+                    <form action="${pageContext.request.contextPath}/finish" method="get">
                         <input type="hidden" name="finishMessage" value="${answer.getFinishMessage()}">
                         <button type="submit">${answer.getText()}</button>
                     </form>

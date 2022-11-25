@@ -1,6 +1,5 @@
 package com.javarush.tchaban.questgame.servlets;
 
-import com.javarush.tchaban.questgame.engine.entities.Housekeeper;
 import com.javarush.tchaban.questgame.engine.entities.User;
 
 import javax.servlet.ServletException;
@@ -14,14 +13,12 @@ import java.io.IOException;
 @WebServlet(name = "FinishServlet", value = "/finish")
 public class FinishServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute("user");
         user.incrementNumberOfParties();
-
-        Housekeeper housekeeper = (Housekeeper) session.getAttribute("housekeeper");
-        housekeeper.setStartQuestionId(1);
+        user.returnToStart();
 
         String finishMessage = request.getParameter("finishMessage");
 
@@ -32,5 +29,4 @@ public class FinishServlet extends HttpServlet {
                 .getRequestDispatcher("/WEB-INF/jsp/finish.jsp")
                 .forward(request, response);
     }
-
 }

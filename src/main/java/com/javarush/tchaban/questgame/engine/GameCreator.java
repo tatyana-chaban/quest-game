@@ -1,6 +1,7 @@
 package com.javarush.tchaban.questgame.engine;
 
 import com.javarush.tchaban.questgame.engine.entities.*;
+import com.javarush.tchaban.questgame.engine.predicates.QuestCheckPredicate;
 
 
 import java.util.ArrayList;
@@ -185,31 +186,31 @@ public class GameCreator {
         quests.add(Quest.builder()
                 .id(1)
                 .text("Find the key")
-                .isFinished(new ContentCheckPredicate("key"))
+                .isFinished(new QuestCheckPredicate("key"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(2)
                 .text("Find reagent")
-                .isFinished(new ContentCheckPredicate("bottle with reagent"))
+                .isFinished(new QuestCheckPredicate("bottle with reagent"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(3)
                 .text("Find formula")
-                .isFinished(new ContentCheckPredicate("secret formula"))
+                .isFinished(new QuestCheckPredicate("secret formula"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(4)
                 .text("Find bonus star")
-                .isFinished(new ContentCheckPredicate("star"))
+                .isFinished(new QuestCheckPredicate("star"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(5)
                 .text("Find the virus")
-                .isFinished(new ContentCheckPredicate("test tube with virus"))
+                .isFinished(new QuestCheckPredicate("test tube with virus"))
                 .build());
 
         return quests;

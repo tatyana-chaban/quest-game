@@ -2,6 +2,7 @@ package com.javarush.tchaban.questgame.servlets;
 
 import com.javarush.tchaban.questgame.engine.entities.Item;
 import com.javarush.tchaban.questgame.engine.entities.Location;
+import com.javarush.tchaban.questgame.engine.predicates.WinCheckPredicate;
 import com.javarush.tchaban.questgame.engine.repository.Repository;
 import com.javarush.tchaban.questgame.engine.entities.User;
 
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ import java.util.List;
 public class LocationServlet extends HttpServlet {
     private Repository<String, Location> locationRepository;
     private Repository<String, Item> itemRepository;
+    private WinCheckPredicate winCheck;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -28,13 +31,20 @@ public class LocationServlet extends HttpServlet {
         ServletContext context = config.getServletContext();
         locationRepository = (Repository<String, Location>) context.getAttribute("locationRepository");
         itemRepository = (Repository<String, Item>) context.getAttribute("itemRepository");
+        winCheck = new WinCheckPredicate(itemRepository);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        String currentLocationName = user.getCurrentLocationName();
+        HttpSession session = request.getSession();
+        var user = (User) session.getAttribute("user");
 
+        if (winCheck.test(user)) {
+            response.sendRedirect(request.getContextPath() + "/finish?finishMessage=" + user.getWinMessage());
+            return;
+        }
+
+        String currentLocationName = user.getCurrentLocationName();
         Location currentLocation = locationRepository.getByKey(currentLocationName);
 
         List<Location> availableLocations = new ArrayList<>();
@@ -57,6 +67,7 @@ public class LocationServlet extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/location.jsp")
                 .forward(request, response);
+
     }
 
     @Override
@@ -69,7 +80,7 @@ public class LocationServlet extends HttpServlet {
             user.setCurrentLocationName(nextLocationName);
         }
 
-        if(itemName != null){
+        if (itemName != null) {
             user.putInInventory(itemName);
         }
 

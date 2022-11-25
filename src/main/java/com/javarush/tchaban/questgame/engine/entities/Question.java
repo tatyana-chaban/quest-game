@@ -3,6 +3,7 @@ package com.javarush.tchaban.questgame.engine.entities;
 import lombok.*;
 
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -15,10 +16,8 @@ public class Question {
     @AllArgsConstructor
     @Builder
     public static class Answer {
-    private String text;
-    private String finishMessage;
-    private Integer nextQuestionId;
+        private String text;
+        private String finishMessage;
+        private Integer nextQuestionId;
     }
-
-
 }
