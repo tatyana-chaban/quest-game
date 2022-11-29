@@ -13,5 +13,4 @@ public class Quest {
     public boolean isFinished(User user) {
         return isFinished.test(user);
     }
-
 }

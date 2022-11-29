@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @WebServlet(name = "LocationServlet", value = "/location")
@@ -31,7 +30,7 @@ public class LocationServlet extends HttpServlet {
         ServletContext context = config.getServletContext();
         locationRepository = (Repository<String, Location>) context.getAttribute("locationRepository");
         itemRepository = (Repository<String, Item>) context.getAttribute("itemRepository");
-        winCheck = new WinCheckPredicate(itemRepository);
+        winCheck = new WinCheckPredicate(itemRepository.getAllKeys());
     }
 
     @Override
@@ -67,11 +66,10 @@ public class LocationServlet extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/location.jsp")
                 .forward(request, response);
-
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User) request.getSession().getAttribute("user");
         String nextLocationName = request.getParameter("nextLocation");
         String itemName = request.getParameter("item");

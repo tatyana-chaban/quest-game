@@ -11,11 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "DialogServlet", value = "/dialog")
 public class DialogServlet extends HttpServlet {
-
     private Repository<Integer, Question> questionRepository;
 
     @Override
@@ -31,19 +29,16 @@ public class DialogServlet extends HttpServlet {
 
         Question currentQuestion = questionRepository.getByKey(Integer.parseInt(currentQuestionIdName));
 
-        List<Question.Answer> availableAnswers = currentQuestion.getAnswers();
-
         request.setAttribute("currentQuestion", currentQuestion);
-        request.setAttribute("availableAnswers", availableAnswers);
+        request.setAttribute("availableAnswers", currentQuestion.getAnswers());
 
         getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/dialog.jsp")
                 .forward(request, response);
-
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nextQuestionIdName = request.getParameter("nextQuestionId");
 
         response.sendRedirect(request.getContextPath() + "/dialog?message=" + Integer.parseInt(nextQuestionIdName));

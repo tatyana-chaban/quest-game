@@ -1,7 +1,7 @@
 package com.javarush.tchaban.questgame.engine.predicates;
 
 import com.javarush.tchaban.questgame.engine.entities.User;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import java.util.function.Predicate;
 

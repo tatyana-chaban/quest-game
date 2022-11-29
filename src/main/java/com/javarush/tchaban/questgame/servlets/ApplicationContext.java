@@ -49,7 +49,5 @@ public class ApplicationContext implements ServletContextListener {
             questRepository.add(quest.getId(), quest);
         }
         context.setAttribute("questRepository", questRepository);
-
-
     }
 }

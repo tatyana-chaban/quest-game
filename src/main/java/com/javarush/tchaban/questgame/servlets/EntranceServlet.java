@@ -2,7 +2,6 @@ package com.javarush.tchaban.questgame.servlets;
 
 import com.javarush.tchaban.questgame.engine.entities.Housekeeper;
 import com.javarush.tchaban.questgame.engine.entities.Quest;
-import com.javarush.tchaban.questgame.engine.predicates.WinCheckPredicate;
 import com.javarush.tchaban.questgame.engine.repository.Repository;
 import com.javarush.tchaban.questgame.engine.entities.User;
 
@@ -57,9 +56,7 @@ public class EntranceServlet extends HttpServlet {
             user.getQuests().addAll(questRepository.getAllKeys());
 
             session.setAttribute("user", user);
-            session.setAttribute("username", userName); // delete
             session.setAttribute("housekeeper", mrsStone);
-
 
             response.sendRedirect(request.getContextPath() + "/dialog?message=" + mrsStone.getStartQuestionId());
         }
