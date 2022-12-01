@@ -1,12 +1,10 @@
 package com.javarush.tchaban.questgame.engine;
 
 import com.javarush.tchaban.questgame.engine.entities.*;
-import com.javarush.tchaban.questgame.engine.predicates.QuestCheckPredicate;
-
-
+import com.javarush.tchaban.questgame.engine.entities.Character;
+import com.javarush.tchaban.questgame.engine.predicates.ItemCheckPredicate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class GameCreator {
     private final List<Location> gameMap = new ArrayList<>();
@@ -43,7 +41,7 @@ public class GameCreator {
 
         Location laboratory = Location.builder()
                 .name("laboratory")
-                .isLocked(true)
+                .isOpen(new ItemCheckPredicate("key"))
                 .availableLocations(List.of("stairs"))
                 .items(List.of("test tube with virus"))
                 .build();
@@ -59,8 +57,8 @@ public class GameCreator {
         return gameMap;
     }
 
-    public Housekeeper createHousekeeper() {
-        return Housekeeper.builder()
+    public Character createCharacter() {
+        return Character.builder()
                 .name("Mrs. Stone")
                 .startQuestionId(1)
                 .build();
@@ -154,7 +152,6 @@ public class GameCreator {
                 .build();
         dialog.add(q6);
 
-
         return dialog;
     }
 
@@ -186,31 +183,31 @@ public class GameCreator {
         quests.add(Quest.builder()
                 .id(1)
                 .text("Find the key")
-                .isFinished(new QuestCheckPredicate("key"))
+                .isFinished(new ItemCheckPredicate("key"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(2)
                 .text("Find reagent")
-                .isFinished(new QuestCheckPredicate("bottle with reagent"))
+                .isFinished(new ItemCheckPredicate("bottle with reagent"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(3)
                 .text("Find formula")
-                .isFinished(new QuestCheckPredicate("secret formula"))
+                .isFinished(new ItemCheckPredicate("secret formula"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(4)
                 .text("Find bonus star")
-                .isFinished(new QuestCheckPredicate("star"))
+                .isFinished(new ItemCheckPredicate("star"))
                 .build());
 
         quests.add(Quest.builder()
                 .id(5)
                 .text("Find the virus")
-                .isFinished(new QuestCheckPredicate("test tube with virus"))
+                .isFinished(new ItemCheckPredicate("test tube with virus"))
                 .build());
 
         return quests;

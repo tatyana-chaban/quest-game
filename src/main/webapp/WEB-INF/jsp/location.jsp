@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="questRepository" value="${applicationScope.get('questRepository')}"/>
-
 
 <!DOCTYPE html>
 <html>
@@ -11,10 +9,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <p class="navbar-brand">
-        <img src="${pageContext.request.contextPath}/images/virus.svg" width="20" height="20"> Quest Game</p>
-</nav>
+<jsp:include page="parts/nav.jsp" />
+
 <div class="container">
     <div class="row">
         <div class="flex-column w-25 vh-100 p-1">
@@ -28,8 +24,7 @@
             <div>
                 <h2>Quests: </h2>
                 <ul>
-                    <c:forEach items="${user.getQuests()}" var="questId">
-                        <c:set var="quest" value="${questRepository.getByKey(questId)}"/>
+                    <c:forEach items="${user.getQuests().values()}" var="quest">
                         <c:choose>
                             <c:when test="${quest.isFinished(user)}">
                                 <li>
@@ -59,26 +54,33 @@
             <hr>
             <ul>
                 <c:forEach items="${availableLocations}" var="nextLocation">
-                    <li>
-                        <form action="${pageContext.request.contextPath}/location" method="post">
-                            <input type="hidden" name="nextLocation" value="${nextLocation.getName()}">
-                            <button type="submit">${nextLocation.getName()}</button>
-                        </form>
-                    </li>
+                    <c:choose>
+                        <c:when test="${nextLocation.isOpen(user)}">
+                            <li>
+                                <form action="${pageContext.request.contextPath}/location" method="post">
+                                    <input type="hidden" name="nextLocation" value="${nextLocation.getName()}">
+                                    <button type="submit">${nextLocation.getName()} </button>
+                                </form>
+                            </li>
+                        </c:when>
+                        <c:when test="${!nextLocation.isOpen(user)}">
+                            <li>
+                               <button>${nextLocation.getName()}</button>  closed
+                            </li>
+                        </c:when>
+                    </c:choose>
                 </c:forEach>
             </ul>
             <p class="h4"><u>Take: </u></p>
             <hr>
             <ul>
                 <c:forEach items="${availableItems}" var="item">
-                    <c:if test="${!user.containsInInventory(item.getName())}">
                         <li>
                             <form action="${pageContext.request.contextPath}/location" method="post">
                                 <input type="hidden" name="item" value="${item.getName()}">
                                 <button type="submit">${item.getName()}</button>
                             </form>
                         </li>
-                    </c:if>
                 </c:forEach>
             </ul>
         </div>

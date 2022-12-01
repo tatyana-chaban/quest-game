@@ -2,7 +2,13 @@ package com.javarush.tchaban.questgame.servlets;
 
 import com.javarush.tchaban.questgame.engine.GameCreator;
 import com.javarush.tchaban.questgame.engine.entities.*;
+import com.javarush.tchaban.questgame.engine.entities.Character;
+import com.javarush.tchaban.questgame.engine.predicates.WinCheckPredicate;
 import com.javarush.tchaban.questgame.engine.repository.Repository;
+import com.javarush.tchaban.questgame.engine.services.DialogService;
+import com.javarush.tchaban.questgame.engine.services.EntranceService;
+import com.javarush.tchaban.questgame.engine.services.FinishService;
+import com.javarush.tchaban.questgame.engine.services.LocationService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -19,8 +25,8 @@ public class ApplicationContext implements ServletContextListener {
         Repository<String, User> userRepository = new Repository<>();
         context.setAttribute("userRepository", userRepository);
 
-        Housekeeper mrsStone = creator.createHousekeeper();
-        context.setAttribute("housekeeper", mrsStone);
+        Character mrsStone = creator.createCharacter();
+        context.setAttribute("character", mrsStone);
 
 
         Repository<String, Location> locationRepository = new Repository<>();
@@ -49,5 +55,17 @@ public class ApplicationContext implements ServletContextListener {
             questRepository.add(quest.getId(), quest);
         }
         context.setAttribute("questRepository", questRepository);
+
+        EntranceService entranceService = new EntranceService(userRepository, questRepository, mrsStone);
+        context.setAttribute("entranceService", entranceService);
+
+        DialogService dialogService = new DialogService(questionRepository);
+        context.setAttribute("dialogService", dialogService);
+
+        LocationService locationService = new LocationService(locationRepository, itemRepository, new WinCheckPredicate(itemRepository.getAllKeys()));
+        context.setAttribute("locationService", locationService);
+
+        FinishService finishService = new FinishService();
+        context.setAttribute("finishService", finishService);
     }
 }

@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <p class="navbar-brand">
-        <img src="${pageContext.request.contextPath}/images/virus.svg" width="20" height="20"> Quest Game</p>
-</nav>
+<jsp:include page="parts/nav.jsp" />
+
 <div class="container">
     <div class="row">
         <div class="flex-column w-25">
@@ -41,7 +39,7 @@
                 <label for="name">Enter your name:</label> <br>
                     <input type="text" id="name" name="username">
                     <input type="submit" value="ОК"/>
-                <c:if test="${blankName == true}">
+                <c:if test="${incorrectName == true}">
                         <p class="text-danger"> <small>field can't be empty </small></p>
                 </c:if>
             </form>

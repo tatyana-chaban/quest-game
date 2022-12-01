@@ -1,24 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Dialog</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <p class="navbar-brand">
-        <img src="${pageContext.request.contextPath}/images/virus.svg" width="20" height="20"> Quest Game</p>
-</nav>
+<jsp:include page="parts/nav.jsp" />
+
 <div class="container">
     <div class="row">
         <div class="flex-column w-25">
-
+            <div>
+                <h2>Info: </h2>
+                <ul>
+                    <li>User: ${user.getName()}</li>
+                    <li>Number of parties: ${user.getNumberOfParties()}</li>
+                </ul>
+            </div>
         </div>
         <div class="flex-column w-50">
             <h1>Dialog</h1>
             <hr>
-            <p class="h4"> <u>${housekeeper.getName()}: </u></p>
+            <p class="h4"><u>${character.getName()}: </u></p>
             <p class="h3 lead font-weight-light">${currentQuestion.getText()}</p>
             <hr>
             <ul>

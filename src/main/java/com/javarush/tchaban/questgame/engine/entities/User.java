@@ -3,22 +3,22 @@ package com.javarush.tchaban.questgame.engine.entities;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
-@Getter
-@Setter
+@Data
 public class User {
     private final String name;
-    private AtomicInteger numberOfParties;
+    private Integer numberOfParties;
     private String currentLocationName;
     private String winMessage;
     private List<String> inventory = new ArrayList<>();
-    private List<Integer> quests = new ArrayList<>();
+    private Map<Integer, Quest> quests = new HashMap<>();
 
     public User(String name) {
         this.name = name;
-        numberOfParties = new AtomicInteger(0);
+        numberOfParties = 0;
         currentLocationName = "hall";
         winMessage = "Congratulations, mission accomplished. The world is saved from a new pandemic!";
     }
@@ -29,11 +29,20 @@ public class User {
         return inventory.contains(itemName);
     }
 
-    public void incrementNumberOfParties(){
-        numberOfParties.incrementAndGet();
+    public void takeQuest(Integer id, Quest quest){
+        if(id == null){
+            throw new  IllegalArgumentException("Id can't be null.");
+        }
+
+        if(quest == null){
+            throw new  IllegalArgumentException("Quest can't be null.");
+        }
+
+        quests.put(id, quest);
     }
-    public int getNumberOfParties(){
-        return numberOfParties.get();
+
+    public void incrementNumberOfParties(){
+        numberOfParties++;
     }
 
     public void returnToStart(){

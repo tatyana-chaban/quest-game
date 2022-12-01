@@ -1,7 +1,7 @@
 package com.javarush.tchaban.questgame.servlets;
 
 import com.javarush.tchaban.questgame.engine.entities.Question;
-import com.javarush.tchaban.questgame.engine.repository.Repository;
+import com.javarush.tchaban.questgame.engine.services.DialogService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -14,20 +14,20 @@ import java.io.IOException;
 
 @WebServlet(name = "DialogServlet", value = "/dialog")
 public class DialogServlet extends HttpServlet {
-    private Repository<Integer, Question> questionRepository;
+    private DialogService dialogService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = config.getServletContext();
-        questionRepository = (Repository<Integer, Question>) context.getAttribute("questionRepository");
+        dialogService = (DialogService) context.getAttribute("dialogService");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String currentQuestionIdName = request.getParameter("message");
 
-        Question currentQuestion = questionRepository.getByKey(Integer.parseInt(currentQuestionIdName));
+        Question currentQuestion = dialogService.getQuestion(currentQuestionIdName);
 
         request.setAttribute("currentQuestion", currentQuestion);
         request.setAttribute("availableAnswers", currentQuestion.getAnswers());
@@ -41,6 +41,8 @@ public class DialogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nextQuestionIdName = request.getParameter("nextQuestionId");
 
-        response.sendRedirect(request.getContextPath() + "/dialog?message=" + Integer.parseInt(nextQuestionIdName));
+        response.sendRedirect(request.getContextPath()
+                + "/dialog?message="
+                + dialogService.getQuestionId(nextQuestionIdName));
     }
 }
