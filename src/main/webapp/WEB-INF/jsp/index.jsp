@@ -6,10 +6,11 @@
 <head>
     <title>Quest-Game</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="parts/nav.jsp" />
+<jsp:include page="parts/nav.jsp"/>
 
 <div class="container">
     <div class="row">
@@ -37,10 +38,10 @@
 
             <form accept-charset="UTF-8" action="${pageContext.request.contextPath}/entrance" method="post">
                 <label for="name">Enter your name:</label> <br>
-                    <input type="text" id="name" name="username">
-                    <input type="submit" value="ОК"/>
+                <input type="text" id="name" name="username">
+                <input type="submit" value="ОК"/>
                 <c:if test="${incorrectName == true}">
-                        <p class="text-danger"> <small>field can't be empty </small></p>
+                    <p class="text-danger"><small>field can't be empty </small></p>
                 </c:if>
             </form>
         </div>

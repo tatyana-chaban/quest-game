@@ -16,6 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "FinishServlet", value = "/finish")
 public class FinishServlet extends HttpServlet {
     private FinishService finishService;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);

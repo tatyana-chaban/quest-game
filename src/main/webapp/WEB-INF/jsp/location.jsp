@@ -6,10 +6,11 @@
 <head>
     <title>${currentLocation.getName()}</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="parts/nav.jsp" />
+<jsp:include page="parts/nav.jsp"/>
 
 <div class="container">
     <div class="row">
@@ -65,7 +66,8 @@
                         </c:when>
                         <c:when test="${!nextLocation.isOpen(user)}">
                             <li>
-                               <button>${nextLocation.getName()}</button>  closed
+                                <button>${nextLocation.getName()}</button>
+                                closed
                             </li>
                         </c:when>
                     </c:choose>
@@ -75,12 +77,12 @@
             <hr>
             <ul>
                 <c:forEach items="${availableItems}" var="item">
-                        <li>
-                            <form action="${pageContext.request.contextPath}/location" method="post">
-                                <input type="hidden" name="item" value="${item.getName()}">
-                                <button type="submit">${item.getName()}</button>
-                            </form>
-                        </li>
+                    <li>
+                        <form action="${pageContext.request.contextPath}/location" method="post">
+                            <input type="hidden" name="item" value="${item.getName()}">
+                            <button type="submit">${item.getName()}</button>
+                        </form>
+                    </li>
                 </c:forEach>
             </ul>
         </div>

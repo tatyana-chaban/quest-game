@@ -25,5 +25,4 @@ public class Location {
             return isOpen.test(user);
         }
     }
-
 }

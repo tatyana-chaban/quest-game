@@ -1,7 +1,6 @@
 package com.javarush.tchaban.questgame.engine.entities;
 
 import lombok.*;
-
 import java.util.List;
 
 @Data

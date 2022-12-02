@@ -32,15 +32,14 @@ public class EntranceServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        User user = null;
-        try {
-            user = entranceService.getOrCreateUser(userName);
-        } catch (IllegalArgumentException e) {
+        if(userName == null || userName.isBlank()){
             request.setAttribute("incorrectName", true);
             getServletContext()
                     .getRequestDispatcher("/WEB-INF/jsp/index.jsp")
                     .forward(request, response);
         }
+
+        User user = entranceService.getOrCreateUser(userName);
         Character mrsStone = entranceService.getCharacter();
 
         session.setAttribute("user", user);

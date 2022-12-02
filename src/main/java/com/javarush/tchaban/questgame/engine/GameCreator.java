@@ -3,58 +3,59 @@ package com.javarush.tchaban.questgame.engine;
 import com.javarush.tchaban.questgame.engine.entities.*;
 import com.javarush.tchaban.questgame.engine.entities.Character;
 import com.javarush.tchaban.questgame.engine.predicates.ItemCheckPredicate;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.javarush.tchaban.questgame.engine.enums.Items.*;
+import static com.javarush.tchaban.questgame.engine.enums.Locations.*;
+
 public class GameCreator {
-    private final List<Location> gameMap = new ArrayList<>();
-    private final List<Item> items = new ArrayList<>();
-    private final List<Question> dialog = new ArrayList<>();
-    private final List<Quest> quests = new ArrayList<>();
 
     public List<Location> createMap() {
+        List<Location> gameMap = new ArrayList<>();
         Location hall = Location.builder()
-                .name("hall")
-                .availableLocations(List.of("kitchen", "stairs", "bathroom"))
+                .name(HALL.getName())
+                .availableLocations(List.of(KITCHEN.getName(), STAIRS.getName(), BATHROOM.getName()))
                 .build();
         gameMap.add(hall);
 
         Location kitchen = Location.builder()
-                .name("kitchen")
-                .availableLocations(List.of("hall"))
-                .items(List.of("bottle with reagent", "secret formula"))
+                .name(KITCHEN.getName())
+                .availableLocations(List.of(HALL.getName()))
+                .items(List.of(REAGENT.getName(), FORMULA.getName()))
                 .build();
         gameMap.add(kitchen);
 
         Location bathroom = Location.builder()
-                .name("bathroom")
-                .availableLocations(List.of("hall"))
-                .items(List.of("star"))
+                .name(BATHROOM.getName())
+                .availableLocations(List.of(HALL.getName()))
+                .items(List.of(STAR.getName()))
                 .build();
         gameMap.add(bathroom);
 
         Location stairs = Location.builder()
-                .name("stairs")
-                .availableLocations(List.of("hall", "laboratory", "bedroom"))
+                .name(STAIRS.getName())
+                .availableLocations(List.of(HALL.getName(), LABORATORY.getName(), BEDROOM.getName()))
                 .build();
         gameMap.add(stairs);
 
         Location laboratory = Location.builder()
-                .name("laboratory")
-                .isOpen(new ItemCheckPredicate("key"))
-                .availableLocations(List.of("stairs"))
-                .items(List.of("test tube with virus"))
+                .name(LABORATORY.getName())
+                .isOpen(new ItemCheckPredicate(KEY.getName()))
+                .availableLocations(List.of(STAIRS.getName()))
+                .items(List.of(VIRUS.getName()))
                 .build();
         gameMap.add(laboratory);
 
         Location bedroom = Location.builder()
-                .name("bedroom")
-                .availableLocations(List.of("stairs"))
-                .items(List.of("key"))
+                .name(BEDROOM.getName())
+                .availableLocations(List.of(STAIRS.getName()))
+                .items(List.of(KEY.getName()))
                 .build();
         gameMap.add(bedroom);
 
-        return gameMap;
+        return List.copyOf(gameMap);
     }
 
     public Character createCharacter() {
@@ -65,6 +66,7 @@ public class GameCreator {
     }
 
     public List<Question> createDialogWithMrsStone() {
+        List<Question> dialog = new ArrayList<>();
         Question q1 = Question.builder()
                 .id(1)
                 .text("Good afternoon! Mr H. is away from home.With whom do I have the honor of speaking?")
@@ -106,7 +108,7 @@ public class GameCreator {
                                 .finishMessage("You failed the mission, we'll have to find a new agent.")
                                 .build(),
                         Question.Answer.builder()
-                                .text("Ok, i'll wait")
+                                .text("Ok, I'll wait")
                                 .finishMessage("Oh.. you better just leave.. Mr H. gave advice to call the police!")
                                 .build()
                 ))
@@ -152,66 +154,66 @@ public class GameCreator {
                 .build();
         dialog.add(q6);
 
-        return dialog;
+        return List.copyOf(dialog);
     }
 
     public List<Item> createItems() {
+        List<Item> items = new ArrayList<>();
         items.add(Item.builder()
-                .name("bottle with reagent")
+                .name(REAGENT.getName())
                 .build());
 
         items.add(Item.builder()
-                .name("test tube with virus")
+                .name(VIRUS.getName())
                 .build());
 
         items.add(Item.builder()
-                .name("secret formula")
+                .name(FORMULA.getName())
                 .build());
 
         items.add(Item.builder()
-                .name("star")
+                .name(STAR.getName())
                 .build());
 
         items.add(Item.builder()
-                .name("key")
+                .name(KEY.getName())
                 .build());
 
-        return items;
+        return List.copyOf(items);
     }
 
     public List<Quest> createQuests() {
+        List<Quest> quests = new ArrayList<>();
         quests.add(Quest.builder()
                 .id(1)
                 .text("Find the key")
-                .isFinished(new ItemCheckPredicate("key"))
+                .isFinished(new ItemCheckPredicate(KEY.getName()))
                 .build());
 
         quests.add(Quest.builder()
                 .id(2)
                 .text("Find reagent")
-                .isFinished(new ItemCheckPredicate("bottle with reagent"))
+                .isFinished(new ItemCheckPredicate(REAGENT.getName()))
                 .build());
 
         quests.add(Quest.builder()
                 .id(3)
                 .text("Find formula")
-                .isFinished(new ItemCheckPredicate("secret formula"))
+                .isFinished(new ItemCheckPredicate(FORMULA.getName()))
                 .build());
 
         quests.add(Quest.builder()
                 .id(4)
                 .text("Find bonus star")
-                .isFinished(new ItemCheckPredicate("star"))
+                .isFinished(new ItemCheckPredicate(STAR.getName()))
                 .build());
 
         quests.add(Quest.builder()
                 .id(5)
                 .text("Find the virus")
-                .isFinished(new ItemCheckPredicate("test tube with virus"))
+                .isFinished(new ItemCheckPredicate(VIRUS.getName()))
                 .build());
 
-        return quests;
+        return List.copyOf(quests);
     }
-
-
 }

@@ -37,8 +37,6 @@ public class LocationServlet extends HttpServlet {
             return;
         }
 
-
-
         Location currentLocation = locationService.getLocation(user.getCurrentLocationName());
         List<Location> availableLocations = locationService.getAvailableLocations(currentLocation);
         List<Item> availableItems = locationService.getAvailableItems(user, currentLocation);
@@ -69,4 +67,3 @@ public class LocationServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/location");
     }
 }
-

@@ -49,7 +49,6 @@ class EntranceServiceTest {
     void test_getOrCreateUser_WhenUserExist() {
         User mockedUser = mock(User.class);
 
-
         when(userRepository.contains(eq("test"))).thenReturn(true);
         when(userRepository.getByKey(eq("test"))).thenReturn(mockedUser);
 
@@ -60,7 +59,7 @@ class EntranceServiceTest {
     void test_getOrCreateUser_CreateNewUser() {
         User newUser = new User("test");
         Quest quest1 = mock(Quest.class);
-        newUser.takeQuest(1,quest1);
+        newUser.takeQuest(1, quest1);
 
         when(userRepository.contains(eq("test"))).thenReturn(false);
         when(questRepository.getAllKeys()).thenReturn(Set.of(1));
@@ -70,9 +69,8 @@ class EntranceServiceTest {
     }
 
     @Test
-    void test_getCharacter(){
+    void test_getCharacter() {
         Character expected = mrsStone;
         assertEquals(expected, entranceService.getCharacter());
     }
-
 }

@@ -35,5 +35,4 @@ class FinishServiceTest {
         finishService.finishGameForThisUser(userForTest);
         assertEquals(expectedUser, userForTest);
     }
-
 }
