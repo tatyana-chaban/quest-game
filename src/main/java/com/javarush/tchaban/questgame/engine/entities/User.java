@@ -47,7 +47,6 @@ public class User {
 
     public void returnToStart(){
         inventory.clear();
-        quests.clear();
         currentLocationName = "hall";
     }
 }
