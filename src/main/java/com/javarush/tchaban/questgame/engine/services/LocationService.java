@@ -21,12 +21,12 @@ public class LocationService {
     private WinCheckPredicate winCheck;
 
     public boolean isWin(User user) {
-        validateUser(user);
+        validateParam(user, "User");
         return winCheck.test(user);
     }
 
     public Location getLocation(String locationName) {
-        validateLocationName(locationName);
+        validateParam(locationName, "Location name");
 
         if (!locationRepository.contains(locationName)) {
             logger.error("Location " + locationName + " not found.");
@@ -37,7 +37,7 @@ public class LocationService {
     }
 
     public List<Location> getAvailableLocations(Location currentLocation) {
-        validateLocation(currentLocation);
+        validateParam(currentLocation, "Location");
 
         List<Location> availableLocations = new ArrayList<>();
         currentLocation
@@ -48,8 +48,8 @@ public class LocationService {
     }
 
     public List<Item> getAvailableItems(User user, Location currentLocation) {
-        validateUser(user);
-        validateLocation(currentLocation);
+        validateParam(user, "User");
+        validateParam(currentLocation, "Location");
 
         List<Item> availableItems = new ArrayList<>();
         for (String itemName : currentLocation.getItems()) {
@@ -67,8 +67,8 @@ public class LocationService {
     }
 
     public void moveToLocation(User user, String nextLocationName) {
-        validateUser(user);
-        validateLocationName(nextLocationName);
+        validateParam(user, "User");
+        validateParam(nextLocationName, "Location name");
 
         Location currentLocation = getLocation(user.getCurrentLocationName());
         List<Location> availableLocations = getAvailableLocations(currentLocation);
@@ -83,8 +83,8 @@ public class LocationService {
     }
 
     public void takeItem(User user, String itemName) {
-        validateUser(user);
-        validateItemName(itemName);
+        validateParam(user, "User");
+        validateParam(itemName, "Item name");
 
         if (!itemRepository.contains(itemName)) {
             logger.error("Item " + itemName + "is not found.");
@@ -94,31 +94,11 @@ public class LocationService {
         user.putInInventory(itemName);
     }
 
-    private void validateUser(User user) {
-        if (user == null) {
-            logger.error("User can't be null.");
-            throw new IllegalArgumentException("User can't be null.");
+    private <P> void validateParam(P param, String paramName) {
+        if (param == null) {
+            logger.error(paramName + " can't be null.");
+            throw new IllegalArgumentException(paramName + " can't be null.");
         }
     }
 
-    private void validateLocation(Location location) {
-        if (location == null) {
-            logger.error("Location can't be null.");
-            throw new IllegalArgumentException("Location can't be null.");
-        }
-    }
-
-    private void validateLocationName(String name) {
-        if (name == null) {
-            logger.error("LocationName can't be null.");
-            throw new IllegalArgumentException("LocationName can't be null.");
-        }
-    }
-
-    private void validateItemName(String name) {
-        if (name == null) {
-            logger.error("ItemName can't be null.");
-            throw new IllegalArgumentException("ItemName can't be null.");
-        }
-    }
 }
